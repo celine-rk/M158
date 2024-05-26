@@ -1,2 +1,68 @@
-# Docker-Compose für das neue Moodle
-asdfas
+version: '3.8'
+
+services:
+  db_old:
+  # mysql version tbd
+    image: mysql:5.7
+    container_name: db_old
+    environment:
+    # pw secrets tbd
+      MYSQL_ROOT_PASSWORD: old_root_password
+      MYSQL_DATABASE: moodle_old
+      MYSQL_USER: moodle
+      MYSQL_PASSWORD: moodle_password
+    volumes:
+      - db_old_data:/var/lib/mysql
+      - ${HOME}/Downloads/moodle_old.sql:/docker-entrypoint-initdb.d/moodle_old.sql
+
+  old_moodle:
+    image: bitnami/moodle:3.10.4
+    container_name: old_moodle
+    environment:
+      - MOODLE_DOCKER_DBTYPE=mysqli
+      - MOODLE_DOCKER_DBHOST=db_old
+      - MOODLE_DOCKER_DBNAME=moodle_old
+      - MOODLE_DOCKER_DBUSER=moodle
+      - MOODLE_DOCKER_DBPASS=moodle_password
+    ports:
+      - "80:80"
+    depends_on:
+      - db_old
+    volumes:
+      - old_moodle_data:/var/www/html
+
+  db_new:
+    image: mysql:8.0
+    container_name: db_new
+    environment:
+    # pw tbd - evt secrets
+      MYSQL_ROOT_PASSWORD: new_root_password
+      MYSQL_DATABASE: moodle_new
+      MYSQL_USER: moodle
+      MYSQL_PASSWORD: moodle_password
+      # volume tbd - weil wir den db zwischenschritt manuell machen
+    volumes:
+      - db_new_data:/var/lib/mysql
+      - ${HOME}/Downloads/moodle_new.sql:/docker-entrypoint-initdb.d/moodle_new.sql
+
+  new_moodle:
+    image: bitnami/moodle:4.4.0
+    container_name: new_moodle1
+    environment:
+      - MOODLE_DOCKER_DBTYPE=mysqli
+      - MOODLE_DOCKER_DBHOST=db_new
+      - MOODLE_DOCKER_DBNAME=moodle_new
+      - MOODLE_DOCKER_DBUSER=moodle
+      - MOODLE_DOCKER_DBPASS=moodle_password
+    ports:
+      - "443:80"
+    depends_on:
+      - db_new
+    volumes:
+      - new_moodle_data:/var/www/html
+
+volumes:
+  db_old_data:
+  db_new_data:
+  old_moodle_data:
+  new_moodle1_data:
