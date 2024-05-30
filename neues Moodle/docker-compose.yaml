@@ -6,7 +6,6 @@ services:
     image: mysql:8.0.36
     container_name: db_old
     environment:
-    # pw secrets tbd
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/old_root_password
       MYSQL_DATABASE: moodle_old
       MYSQL_USER: moodle
@@ -40,7 +39,6 @@ services:
     image: mysql:8.4.0
     container_name: db_new
     environment:
-    # pw tbd - evt secrets
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/new_root_password
       MYSQL_DATABASE: moodle_new
       MYSQL_USER: moodle

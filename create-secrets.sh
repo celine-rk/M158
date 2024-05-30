@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Autor: Céline König
+# Erstellt am: 30.05.2024
+
 # Erstellt die verwendeten Secrets im docker-compose.yaml
 # Funktion, um ein zufälliges Passwort zu generieren
 generate_password() {
