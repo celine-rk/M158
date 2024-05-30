@@ -16,7 +16,6 @@ services:
       - moodle_password
     volumes:
       - db_old_data:/var/lib/mysql
-      - ${HOME}/Downloads/moodle_old.sql:/docker-entrypoint-initdb.d/moodle_old.sql
 
   old_moodle:
     image: bitnami/moodle:3.10.4
@@ -52,8 +51,7 @@ services:
       - moodle_password
     volumes:
       - db_new_data:/var/lib/mysql
-      - ${HOME}/Downloads/moodle_new.sql:/docker-entrypoint-initdb.d/moodle_new.sql
-
+      
   new_moodle:
     image: bitnami/moodle:4.4.0
     container_name: new_moodle
@@ -62,7 +60,7 @@ services:
       - MOODLE_DOCKER_DBHOST=db_new
       - MOODLE_DOCKER_DBNAME=moodle_new
       - MOODLE_DOCKER_DBUSER=moodle
-      - MOODLE_DOCKER_DBPASS: /run/secrets/moodle_password
+      - MOODLE_DOCKER_DBPASS_FILE: /run/secrets/moodle_password
     secrets:
       - moodle_password
     ports:
