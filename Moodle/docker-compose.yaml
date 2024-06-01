@@ -22,11 +22,11 @@ services:
     image: bitnami/moodle:3.10.4
     container_name: old_moodle
     environment:
-      MOODLE_DATABASE_TYPE=mysqli
-      MOODLE_DATABASE_HOST=db_old
-      MOODLE_DATABASE_NAME=moodle_old
-      MOODLE_DATABASE_USER=moodle
-      MOODLE_DATABASE_PASSWORD=he94n92GEFX
+      MOODLE_DATABASE_TYPE: mysqli
+      MOODLE_DATABASE_HOST: mysql
+      MOODLE_DATABASE_NAME: moodle_old
+      MOODLE_DATABASE_USER: moodle
+      MOODLE_DATABASE_PASSWORD: he94n92GEFX
     ports:
       - "8080:80"
     depends_on:
@@ -57,11 +57,11 @@ services:
     image: bitnami/moodle:4.4.0
     container_name: new_moodle
     environment:
-      MOODLE_DOCKER_DBTYPE: mysqli
-      MOODLE_DOCKER_DBHOST: db_new
-      MOODLE_DOCKER_DBNAME: moodle_new
-      MOODLE_DOCKER_DBUSER: moodle
-      MOODLE_DOCKER_DBPASS: he94n92GEFX
+      MOODLE_DATABASE_TYPE: mysqli
+      MOODLE_DATABASE_HOST: mysql
+      MOODLE_DATABASE_NAME: moodle_new
+      MOODLE_DATABASE_USER: moodle
+      MOODLE_DATABASE_PASSWORD: he94n92GEFX
     ports:
       - "80:80"
     depends_on:
