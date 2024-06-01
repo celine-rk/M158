@@ -16,8 +16,8 @@ Um das Programm nutzen zu können, muss das Script["pre-ceation.sh"](https://git
 ### Docker Images erstellen
 Um die Docker-Images zu erstellen, navigieren Sie zu den Ordnern ["Moodle > altes Moodle"](https://github.com/celine-rk/M158/tree/main/Moodle/altes%20Moodle) und ["Moodle > neues Moodle"](https://github.com/celine-rk/M158/tree/main/Moodle/neues%20Moodle). Danach können die Images mit den folgenden Befehlen erstellt werden:
 
-Neues moodle :`docker build -t moodledb_new`
-Altes moodle :`docker build -t moodledb_old`
+Neues moodle: `docker build -t moodledb_new`
+Altes moodle: `docker build -t moodledb_old`
 
 
 
