@@ -9,10 +9,9 @@ services:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/old_root_password
       MYSQL_DATABASE: moodle_old
       MYSQL_USER: moodle
-      MYSQL_PASSWORD_FILE: /run/secrets/moodle_password
+      MYSQL_PASSWORD: he94n92GEFX
     secrets: 
       - old_root_password
-      - moodle_password
     volumes:
       - db_old_data:/var/lib/mysql
     networks:
@@ -23,15 +22,12 @@ services:
     image: bitnami/moodle:3.10.4
     container_name: old_moodle
     environment:
-      - MOODLE_DOCKER_DBTYPE: mysqli
-      - MOODLE_DOCKER_DBHOST: db_old
-      - MOODLE_DOCKER_DBNAME: moodle_old
-      - MOODLE_DOCKER_DBUSER: moodle
-      - MOODLE_DOCKER_DBPASS: /run/secrets/moodle_password
-    secrets: 
-      - moodle_password
+      MOODLE_DATABASE_TYPE=mysqli
+      MOODLE_DATABASE_HOST=db_old
+      MOODLE_DATABASE_NAME=moodle_old
+      MOODLE_DATABASE_USER=moodle
+      MOODLE_DATABASE_PASSWORD=he94n92GEFX
     ports:
-    # port tbd -> kann nicht derselbe hostport sein
       - "8080:80"
     depends_on:
       - db_old
@@ -48,10 +44,9 @@ services:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/new_root_password
       MYSQL_DATABASE: moodle_new
       MYSQL_USER: moodle
-      MYSQL_PASSWORD_FILE: /run/secrets/moodle_password
+      MYSQL_PASSWORD: he94n92GEFX
     secrets: 
       - new_root_password
-      - moodle_password
     volumes:
       - db_new_data:/var/lib/mysql
     networks:
@@ -62,13 +57,11 @@ services:
     image: bitnami/moodle:4.4.0
     container_name: new_moodle
     environment:
-      - MOODLE_DOCKER_DBTYPE: mysqli
-      - MOODLE_DOCKER_DBHOST: db_new
-      - MOODLE_DOCKER_DBNAME: moodle_new
-      - MOODLE_DOCKER_DBUSER: moodle
-      - MOODLE_DOCKER_DBPASS_FILE: /run/secrets/moodle_password
-    secrets:
-      - moodle_password
+      MOODLE_DOCKER_DBTYPE: mysqli
+      MOODLE_DOCKER_DBHOST: db_new
+      MOODLE_DOCKER_DBNAME: moodle_new
+      MOODLE_DOCKER_DBUSER: moodle
+      MOODLE_DOCKER_DBPASS: he94n92GEFX
     ports:
       - "80:80"
     depends_on:
@@ -82,14 +75,6 @@ services:
 secrets:
   old_root_password:
     file: ${HOME}/secrets/old_root_password.txt
-  moodle_password: 
-    file: ${HOME}/secrets/moodle_password.txt
   new_root_password:
     file: ${HOME}/secrets/new_root_password.txt
 
-# Referenzierung aller Volumes
-volumes:
-  db_old_data:
-  db_new_data:
-  old_moodle_data:
-  new_moodle_data:
