@@ -37,11 +37,14 @@ done
 # Ausgabe der Bestätigung
 echo "Secrets wurden erstellt: ${secrets[@]}"
 
+SEPARATOR="----------------------------------------------------------"
+
 # Docker Netzwerk erstellen
 # Variablen der Docker-Netzwerke
 NETWORK_OLD="moodle-old"
 NETWORK_NEW="moodle-new"
 
+echo "$SEPARATOR"
 # Funktion, um ein Docker-Netzwerk zu erstellen
 create_network() {
     local network_name=$1
