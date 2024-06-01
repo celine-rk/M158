@@ -30,9 +30,9 @@ services:
       - db_old
 secrets:
   old_root_password:
-    file: ${HOME}/secrets/old_root_password.txt
+    file: M158-main/secrets/old_root_password.txt
   moodle_password:
-    file: ${HOME}/secrets/moodle_password.txt
+    file: M158-main/secrets/moodle_password.txt
 
 volumes:
   db_old_data:

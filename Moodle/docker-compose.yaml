@@ -33,9 +33,9 @@ services:
       - moodle-new
 secrets:
   new_root_password:
-    file: ${HOME}/secrets/new_root_password.txt
+    file: M158-main/secrets/new_root_password.txt
   moodle_password:
-    file: ${HOME}/secrets/moodle_password.txt
+    file: M158-main/secrets/moodle_password.txt
 
 volumes:
   db_new_data:
