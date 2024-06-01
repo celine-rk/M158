@@ -1,7 +1,6 @@
-version: '3.8'
+version: '2.27.0'
 
 services:
-
 # DB-Container des alten Moodles
   db_old:
     image: moodledb_old
@@ -24,10 +23,10 @@ services:
     image: bitnami/moodle:3.10.4
     container_name: old_moodle
     environment:
-      - MOODLE_DOCKER_DBTYPE=mysqli
-      - MOODLE_DOCKER_DBHOST=db_old
-      - MOODLE_DOCKER_DBNAME=moodle_old
-      - MOODLE_DOCKER_DBUSER=moodle
+      - MOODLE_DOCKER_DBTYPE: mysqli
+      - MOODLE_DOCKER_DBHOST: db_old
+      - MOODLE_DOCKER_DBNAME: moodle_old
+      - MOODLE_DOCKER_DBUSER: moodle
       - MOODLE_DOCKER_DBPASS: /run/secrets/moodle_password
     secrets: 
       - moodle_password
@@ -63,10 +62,10 @@ services:
     image: bitnami/moodle:4.4.0
     container_name: new_moodle
     environment:
-      - MOODLE_DOCKER_DBTYPE=mysqli
-      - MOODLE_DOCKER_DBHOST=db_new
-      - MOODLE_DOCKER_DBNAME=moodle_new
-      - MOODLE_DOCKER_DBUSER=moodle
+      - MOODLE_DOCKER_DBTYPE: mysqli
+      - MOODLE_DOCKER_DBHOST: db_new
+      - MOODLE_DOCKER_DBNAME: moodle_new
+      - MOODLE_DOCKER_DBUSER: moodle
       - MOODLE_DOCKER_DBPASS_FILE: /run/secrets/moodle_password
     secrets:
       - moodle_password
@@ -81,16 +80,16 @@ services:
 
 # Definierung aller Secrets
 secrets:
-  old_root_password:
-    file: ${HOME}/secrets/old_root_password.txt
-  moodle_password: 
-    file: ${HOME}/secrets/moodle_password.txt
-  new_root_password:
-    file: ${HOME}/secrets/new_root_password.txt
+    old_root_password:
+      file: ${HOME}/secrets/old_root_password.txt
+    moodle_password: 
+      file: ${HOME}/secrets/moodle_password.txt
+    new_root_password:
+      file: ${HOME}/secrets/new_root_password.txt
 
 # Referenzierung aller Volumes
 volumes:
-  db_old_data:
-  db_new_data:
-  old_moodle_data:
-  new_moodle_data:
+    db_old_data:
+    db_new_data:
+    old_moodle_data:
+    new_moodle_data:
