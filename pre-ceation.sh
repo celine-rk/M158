@@ -7,7 +7,7 @@ generate_password() {
 }
 
 # Pfad zum Speichern der Secrets
-SECRETS_DIR="${HOME}/secrets"
+SECRETS_DIR="/secrets"
 
 # Array von Secrets und ihren Dateinamen
 declare -A secrets=(
@@ -20,13 +20,14 @@ declare -A secrets=(
 if [[ -d "$SECRETS_DIR" ]]; then
     echo "Der Ordner $SECRETS_DIR existiert bereits und wird aus Fehlertoleranzgründen gelöscht!"
     rm -rf "$SECRETS_DIR"
+    mkdir -p "$SECRETS_DIR"
 else
     echo "Der Ordner wurde nicht gefunden und wird daher neu erstellt"
     mkdir -p "$SECRETS_DIR"
-done
+fi
 
 # Iteriere durch jedes Secret
-for secret_name in "${secrets[@]}"; do
+for secret_name in "${!secrets[@]}"; do
     # Generiere ein zufälliges Passwort
     password=$(generate_password)
     
