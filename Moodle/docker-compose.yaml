@@ -1,7 +1,5 @@
-version: '2.27.0'
-
+version: "3.8"
 services:
-# DB-Container des alten Moodles
   db_old:
     image: moodledb_old
     container_name: db_old
@@ -15,9 +13,7 @@ services:
     volumes:
       - db_old_data:/var/lib/mysql
     networks:
-      - moodle-old
-      
-# Container des alten Moodles
+      - moodle-old    
   old_moodle:
     image: bitnami/moodle:3.10.4
     container_name: old_moodle
@@ -35,8 +31,6 @@ services:
       - old_moodle_data:/var/www/html
     networks:
       - moodle-old
-
-# DB-Container des neuen Moodles
   db_new:
     image: moodledb_new
     container_name: db_new
@@ -51,8 +45,6 @@ services:
       - db_new_data:/var/lib/mysql
     networks:
       - moodle-new
-      
-# Container des neuen Moodles
   new_moodle:
     image: bitnami/moodle:4.4.0
     container_name: new_moodle
@@ -70,8 +62,6 @@ services:
       - new_moodle_data:/var/www/html
     networks:
       - moodle-new
-
-# Definierung aller Secrets
 secrets:
   old_root_password:
     file: ${HOME}/secrets/old_root_password.txt
