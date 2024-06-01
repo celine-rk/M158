@@ -1,9 +1,10 @@
 version: '3.8'
 
 services:
+
+# DB-Container des alten Moodles
   db_old:
-  # mysql version tbd
-    image: mysql:8.0.36
+    image: moodledb_old
     container_name: db_old
     environment:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/old_root_password
@@ -15,7 +16,10 @@ services:
       - moodle_password
     volumes:
       - db_old_data:/var/lib/mysql
-
+    networks:
+      - moodle-old
+      
+# Container des alten Moodles
   old_moodle:
     image: bitnami/moodle:3.10.4
     container_name: old_moodle
@@ -33,23 +37,27 @@ services:
       - db_old
     volumes:
       - old_moodle_data:/var/www/html
+    networks:
+      - moodle-old
 
+# DB-Container des neuen Moodles
   db_new:
-   # evt mariadb?
-    image: mysql:8.4.0
+    image: moodledb_new
     container_name: db_new
     environment:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/new_root_password
       MYSQL_DATABASE: moodle_new
       MYSQL_USER: moodle
       MYSQL_PASSWORD_FILE: /run/secrets/moodle_password
-      # volume tbd - weil wir den db zwischenschritt manuell machen
     secrets: 
       - new_root_password
       - moodle_password
     volumes:
       - db_new_data:/var/lib/mysql
+    networks:
+      - moodle-new
       
+# Container des neuen Moodles
   new_moodle:
     image: bitnami/moodle:4.4.0
     container_name: new_moodle
@@ -67,7 +75,10 @@ services:
       - db_new
     volumes:
       - new_moodle_data:/var/www/html
+    networks:
+      - moodle-new
 
+# Definierung aller Secrets
 secrets:
   old_root_password:
     file: ${HOME}/secrets/old_root_password.txt
@@ -76,6 +87,7 @@ secrets:
   new_root_password:
     file: ${HOME}/secrets/new_root_password.txt
 
+# Referenzierung aller Volumes
 volumes:
   db_old_data:
   db_new_data:
