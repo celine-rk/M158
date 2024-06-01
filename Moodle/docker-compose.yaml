@@ -80,16 +80,16 @@ services:
 
 # Definierung aller Secrets
 secrets:
-    old_root_password:
-      file: ${HOME}/secrets/old_root_password.txt
-    moodle_password: 
-      file: ${HOME}/secrets/moodle_password.txt
-    new_root_password:
-      file: ${HOME}/secrets/new_root_password.txt
+  old_root_password:
+    file: ${HOME}/secrets/old_root_password.txt
+  moodle_password: 
+    file: ${HOME}/secrets/moodle_password.txt
+  new_root_password:
+    file: ${HOME}/secrets/new_root_password.txt
 
 # Referenzierung aller Volumes
 volumes:
-    db_old_data:
-    db_new_data:
-    old_moodle_data:
-    new_moodle_data:
+  db_old_data:
+  db_new_data:
+  old_moodle_data:
+  new_moodle_data:
