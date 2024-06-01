@@ -3,10 +3,10 @@ services:
   db_old:
     image: moodledb_old
     environment:
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/old_root_password
-      MYSQL_DATABASE: moodle_old
-      MYSQL_USER: moodle
-      MYSQL_PASSWORD_FILE: /run/secrets/moodle_password
+      MARIADB_ROOT_PASSWORD: test
+      MARIADB_DATABASE: moodle_old
+      MARIADB_USER: moodle
+      MARIADB_PASSWORD: test
     volumes:
       - db_old_data:/var/lib/mysql
     networks:
@@ -15,12 +15,13 @@ services:
   old_moodle:
     image: bitnami/moodle:3.10.4
     ports:
-      - "8080:80"
+      - "80:8080"
     environment:
       MOODLE_DATABASE_HOST: db_old
       MOODLE_DATABASE_NAME: moodle_old
       MOODLE_DATABASE_USER: moodle
-      MOODLE_DATABASE_PASSWORD_FILE: /run/secrets/moodle_password
+      MOODLE_DATABASE_PASSWORD: test
+
     volumes:
       - moodledata:/bitnami/moodle
       - dbdata:/bitnami/moodledata
@@ -28,11 +29,6 @@ services:
       - moodle-old  
     depends_on:
       - db_old
-secrets:
-  old_root_password:
-    file: M158-main/secrets/old_root_password.txt
-  moodle_password:
-    file: M158-main/secrets/moodle_password.txt
 
 volumes:
   db_old_data:

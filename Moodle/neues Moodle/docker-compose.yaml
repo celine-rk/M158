@@ -1,15 +1,12 @@
 version: "3.8"
 services:
   db_new:
-    image: moodledb_new
+    image: bitnami/mariadb
     environment:
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/new_root_password
+      MYSQL_ROOT_PASSWORD: test
       MYSQL_DATABASE: moodle_new
       MYSQL_USER: moodle
-      MYSQL_PASSWORD_FILE: /run/secrets/moodle_password
-    secrets: 
-      - new_root_password
-      - moodle_password
+      MYSQL_PASSWORD: test
     volumes:
       - db_new_data:/var/lib/mysql
     networks:
@@ -21,7 +18,7 @@ services:
       MOODLE_DATABASE_HOST: db_new
       MOODLE_DATABASE_NAME: moodle_new
       MOODLE_DATABASE_USER: moodle
-      MOODLE_DATABASE_PASSWORD_FILE: /run/secrets/moodle_password
+      MOODLE_DATABASE_PASSWORD: test
     ports:
       - "80:80"
     depends_on:
@@ -31,11 +28,6 @@ services:
       - dbdata:/bitnami/moodledata
     networks:
       - moodle-new
-secrets:
-  new_root_password:
-    file: M158-main/secrets/new_root_password.txt
-  moodle_password:
-    file: M158-main/secrets/moodle_password.txt
 
 volumes:
   db_new_data:
