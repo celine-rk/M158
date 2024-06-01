@@ -68,3 +68,12 @@ secrets:
   new_root_password:
     file: ${HOME}/secrets/new_root_password.txt
 
+volumes:
+  db_old_data:
+  db_new_data:
+  old_moodle_data:
+  new_moodle_data:
+
+networks:
+  moodle-old:
+  moodle-new:
