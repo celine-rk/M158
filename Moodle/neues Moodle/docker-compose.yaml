@@ -20,7 +20,7 @@ services:
       MOODLE_DATABASE_USER: moodle
       MOODLE_DATABASE_PASSWORD: test
     ports:
-      - "80:80"
+      - "80:8080"
     depends_on:
       - db_new
     volumes:
