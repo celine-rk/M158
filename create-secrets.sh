@@ -16,15 +16,21 @@ declare -A secrets=(
     ["new_root_password"]="new_root_password.txt"
 )
 
-# Erstelle das Verzeichnis, falls es nicht existiert
-mkdir -p "$SECRETS_DIR"
+# Erstellung und Löschung von SECRETS_DIR 
+if [[ -d "$SECRETS_DIR" ]]; then
+    echo "Der Ordner $SECRETS_DIR existiert bereits und wird aus Fehlertoleranzgründen gelöscht!"
+    rm -rf "$SECRETS_DIR"
+else
+    echo "Der Ordner wurde nicht gefunden und wird daher neu erstellt"
+    mkdir -p "$SECRETS_DIR"
+done
 
 # Iteriere durch jedes Secret
-for secret_name in "${!secrets[@]}"; do
+for secret_name in "${secrets[@]}"; do
     # Generiere ein zufälliges Passwort
     password=$(generate_password)
     
-    # Speichere das Passwort in der Datei
+    # Speichere das Passwort in der entsprechenden Datei
     echo "$password" > "$SECRETS_DIR/${secrets[$secret_name]}"
 done
 
@@ -32,7 +38,6 @@ done
 echo "Secrets wurden erstellt: ${secrets[@]}"
 
 # Docker Netzwerk erstellen
-
 # Variablen der Docker-Netzwerke
 NETWORK_OLD="moodle-old"
 NETWORK_NEW="moodle-new"
@@ -52,5 +57,6 @@ create_network() {
 create_network $NETWORK_OLD
 create_network $NETWORK_NEW
 
+# Ausgabe der Bestätigung
 echo "Docker-Netzwerke wurden erstellt."
 
