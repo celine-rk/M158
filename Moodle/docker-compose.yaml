@@ -4,10 +4,7 @@ services:
 
 # DB-Container des alten Moodles
   db_old:
-
     image: moodledb_old
-  # image tbd -> eigenes dockerfile
-    image: mysql:8.0.36
     container_name: db_old
     environment:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/old_root_password
@@ -47,8 +44,6 @@ services:
 # DB-Container des neuen Moodles
   db_new:
     image: moodledb_new
-   # evt mariadb -> eigenes dockerfile 
-    image: mysql:8.4.0
     container_name: db_new
     environment:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/new_root_password
