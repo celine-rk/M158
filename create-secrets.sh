@@ -30,3 +30,27 @@ done
 
 # Ausgabe der Bestätigung
 echo "Secrets wurden erstellt: ${secrets[@]}"
+
+# Docker Netzwerk erstellen
+
+# Variablen der Docker-Netzwerke
+NETWORK_OLD="moodle-old"
+NETWORK_NEW="moodle-new"
+
+# Funktion, um ein Docker-Netzwerk zu erstellen
+create_network() {
+    local network_name=$1
+    if [ ! "$(docker network ls --filter name=^${network_name}$ --format="{{ .Name }}")" ]; then
+        echo "Erstelle Docker-Netzwerk: $network_name"
+        docker network create $network_name
+    else
+        echo "Docker-Netzwerk $network_name existiert bereits."
+    fi
+}
+
+# Erstelle die Netzwerke
+create_network $NETWORK_OLD
+create_network $NETWORK_NEW
+
+echo "Docker-Netzwerke wurden erstellt."
+
