@@ -28,6 +28,15 @@ services:
       - dbdata:/bitnami/moodledata
     networks:
       - moodle-new
+  phpmyadmin: 
+    image: phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_HOST=db_new
+    networks:
+      - moodle-new
 
 volumes:
   db_new_data:
