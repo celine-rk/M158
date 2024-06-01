@@ -1,0 +1,43 @@
+version: "3.8"
+services:
+  db_old:
+    image: moodledb_old
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/old_root_password
+      MYSQL_DATABASE: moodle_old
+      MYSQL_USER: moodle
+      MYSQL_PASSWORD_FILE: /run/secrets/moodle_password
+    volumes:
+      - db_old_data:/var/lib/mysql
+    networks:
+      - moodle-old
+
+  old_moodle:
+    image: bitnami/moodle:3.10.4
+    ports:
+      - "8080:80"
+    environment:
+      MOODLE_DATABASE_HOST: db_old
+      MOODLE_DATABASE_NAME: moodle_old
+      MOODLE_DATABASE_USER: moodle
+      MOODLE_DATABASE_PASSWORD_FILE: /run/secrets/moodle_password
+    volumes:
+      - moodledata:/bitnami/moodle
+      - dbdata:/bitnami/moodledata
+    networks:
+      - moodle-old  
+    depends_on:
+      - db_old
+secrets:
+  old_root_password:
+    file: ${HOME}/secrets/old_root_password.txt
+  moodle_password:
+    file: ${HOME}/secrets/moodle_password.txt
+
+volumes:
+  db_old_data:
+  moodledata:
+  dbdata: 
+
+networks:
+  moodle-old:

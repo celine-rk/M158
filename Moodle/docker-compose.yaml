@@ -1,79 +1,46 @@
 version: "3.8"
 services:
-  db_old:
-    image: moodledb_old
-    container_name: db_old
-    environment:
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/old_root_password
-      MYSQL_DATABASE: moodle_old
-      MYSQL_USER: moodle
-      MYSQL_PASSWORD: he94n92GEFX
-    secrets: 
-      - old_root_password
-    volumes:
-      - db_old_data:/var/lib/mysql
-    networks:
-      - moodle-old    
-  old_moodle:
-    image: bitnami/moodle:3.10.4
-    container_name: old_moodle
-    environment:
-      MOODLE_DATABASE_TYPE: mysqli
-      MOODLE_DATABASE_HOST: mysql
-      MOODLE_DATABASE_NAME: moodle_old
-      MOODLE_DATABASE_USER: moodle
-      MOODLE_DATABASE_PASSWORD: he94n92GEFX
-    ports:
-      - "8080:80"
-    depends_on:
-      - db_old
-    volumes:
-      - old_moodle_data:/var/www/html
-    networks:
-      - moodle-old
   db_new:
     image: moodledb_new
-    container_name: db_new
     environment:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/new_root_password
       MYSQL_DATABASE: moodle_new
       MYSQL_USER: moodle
-      MYSQL_PASSWORD: he94n92GEFX
+      MYSQL_PASSWORD_FILE: /run/secrets/moodle_password
     secrets: 
       - new_root_password
+      - moodle_password
     volumes:
       - db_new_data:/var/lib/mysql
     networks:
       - moodle-new
+  
   new_moodle:
     image: bitnami/moodle:4.4.0
-    container_name: new_moodle
     environment:
-      MOODLE_DATABASE_TYPE: mysqli
-      MOODLE_DATABASE_HOST: mysql
+      MOODLE_DATABASE_HOST: db_new
       MOODLE_DATABASE_NAME: moodle_new
       MOODLE_DATABASE_USER: moodle
-      MOODLE_DATABASE_PASSWORD: he94n92GEFX
+      MOODLE_DATABASE_PASSWORD_FILE: /run/secrets/moodle_password
     ports:
       - "80:80"
     depends_on:
       - db_new
     volumes:
-      - new_moodle_data:/var/www/html
+      - moodle-data:/bitnami/moodle
+      - dbdata:/bitnami/moodledata
     networks:
       - moodle-new
 secrets:
-  old_root_password:
-    file: ${HOME}/secrets/old_root_password.txt
   new_root_password:
     file: ${HOME}/secrets/new_root_password.txt
+  moodle_password:
+    file: ${HOME}/secrets/moodle_password.txt
 
 volumes:
-  db_old_data:
   db_new_data:
-  old_moodle_data:
-  new_moodle_data:
+  moodle-data:
+  dbdata:
 
 networks:
-  moodle-old:
   moodle-new:
