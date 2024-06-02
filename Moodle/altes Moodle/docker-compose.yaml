@@ -37,6 +37,7 @@ services:
       - PMA_HOST=db_old
     networks:
       - moodle-network-old
+      
 
 volumes:
   db_old_data:
