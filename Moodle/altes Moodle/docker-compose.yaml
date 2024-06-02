@@ -10,9 +10,21 @@ services:
     volumes:
       - db_old_data:/bitnami/mariadb
     networks:
-      - moodle-network-old
+      - moodle-network
+
+  db_new:
+    image: bitnami/mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: MuMissduP1434!
+      MARIADB_DATABASE: moodle_new
+      MARIADB_USER: moodle
+      MARIADB_PASSWORD: Riethuesli>12345678910!
+    volumes:
+      - db_new_data:/bitnami/mariadb
+    networks:
+      - moodle-network
   
-  new_moodle:
+  old_moodle:
     image: bitnami/moodle:3.11.12
     environment:
       MOODLE_DATABASE_HOST: db_old
@@ -24,25 +36,54 @@ services:
     depends_on:
       - db_old
     volumes:
-      - moodle-data:/bitnami/moodle
-      - dbdata:/bitnami/moodledata
+      - moodle-data-old:/bitnami/moodle
+      - dbdata-old:/bitnami/moodledata
     networks:
-      - moodle-network-old
+      - moodle-network
+
   phpmyadmin: 
     image: phpmyadmin
     restart: always
     ports:
       - "8088:80"
     environment:
-      - PMA_HOST=db_old
+      - PMA_HOST=db_new
     networks:
-      - moodle-network-old
-      
+      - moodle-network
+
+new_moodle:
+    image: bitnami/moodle:4.4.0
+    environment:
+      MOODLE_DATABASE_HOST: db_new
+      MOODLE_DATABASE_NAME: moodle_new
+      MOODLE_DATABASE_USER: moodle
+      MOODLE_DATABASE_PASSWORD: Riethuesli>12345678910!
+    ports:
+      - "80:8080"
+    depends_on:
+      - db_new
+    volumes:
+      - moodle-data-new:/bitnami/moodle
+      - dbdata-new:/bitnami/moodledata
+    networks:
+      - moodle-network
+
+  phpmyadmin: 
+    image: phpmyadmin
+    restart: always
+    ports:
+      - "88:80"
+    environment:
+      - PMA_HOST=db_new
+    networks:
+      - moodle-network
+
 
 volumes:
   db_old_data:
-  moodle-data:
-  dbdata:
-
+  moodle-data-new:
+  dbdata-new:
+  moodle-data-old:
+  dbdata-old:
 networks:
-  moodle-network-old:
+  moodle-network:
