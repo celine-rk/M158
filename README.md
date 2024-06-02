@@ -1,26 +1,30 @@
 # Realisierung Modul 169
-In dieser Anleitung wird gezeigt, wie man die vier Docker Container startet, die für die beiden Moodle Instanzen benötigt werden, wie man die entsprechenden Images mit Hilfe des Docker Files erstellt und wie man sie mit Hilfe von Docker Compose startet.
+In dieser Anleitung wird gezeigt, wie man die sechs Docker Container startet, die für die beiden Moodle Instanzen benötigt werdenund wie man sie mit Hilfe von Docker Compose startet.
 
 ## Hinweise zur Funktionalität
 Um die Funktionalität des Produktes zu gewährleisten, muss zwingend Ubuntu als Betriebssystem verwendet werden, da ansonsten nicht gewährleistet werden kann, dass Skripte und andere Bestandteile des Produktes einwandfrei funktionieren. Ausserdem müssen Docker und Docker-Compose zwingend vorhanden und funktionsfähig sein.
 
-Der Ordner ${Home}/Secrets wird automatisch erstellt, um die Passwortdateien zu speichern. **Wenn dieser Ordner bereits existiert, wird er gelöscht, was zu Datenverlust führen kann!**
 
 # Anleitung zur verwendung des Produktes
 ### Download der Dateien
-Um den Ausführungsprozess zu beschleunigen, muss zunächst das gesamte Github Repository als Zip heruntergeladen und enpackt werden werden. 
+Um den Ausführungsprozess zu beschleunigen, muss der Ornder ["Moodle"](https://github.com/celine-rk/M158/tree/main/Moodle) heruntergeladen werden. Optional kann auch das Gesamte Repository heruntergeladen werden. 
+**Die  "*.sql.zip" files dürfen nicht enpackt werden.**
+### Vorbereitung
+Der Inhalt des Ordners ["Moodle"](https://github.com/celine-rk/M158/tree/main/Moodle) muss in ein separates leeres Verzeichnis kopiert werden.
+Danach sollten Sie mit der Konsole in dieses Verzeichnis wechseln, verwenden sie dafür den Befehl `cd Ihr\Pfad\`.
+### Docker Compose ausführen
+Sobald Sie mit den Konsole sich in ihrem im Verzeichnis befinden in welchem das DockerCompose.yaml file sich befindet können sie dies mit diesem Befehl starten:
 
-### Pre Creation Skript
-Um das Programm nutzen zu können, muss das Script["pre-ceation.sh"](https://github.com/celine-rk/M158/blob/main/pre-ceation.sh) ausgeführt werden, damit die entsprechenden Secret Files erstellt und die Netzwerke angelegt werden.
- 
-### Docker Images erstellen
-Um die Docker-Images zu erstellen, navigieren Sie zu den Ordnern ["Moodle > altes Moodle"](https://github.com/celine-rk/M158/tree/main/Moodle/altes%20Moodle) und ["Moodle > neues Moodle"](https://github.com/celine-rk/M158/tree/main/Moodle/neues%20Moodle). Danach können die Images mit den folgenden Befehlen erstellt werden:
+`docker-compose up -d` oder `docker compose up -d`
 
-Neues moodle: `docker build -t moodledb_new .`
+Wenn Sie eine detaillierte Ausgabe wünschen, können Sie folgenden Befehl verwenden:
 
-Altes moodle: `docker build -t moodledb_old .`
+`docker-compose up` oder `docker compose up`
 
+Warten Sie dann einige Minuten, bis der Start erfolgreich war. Sie haben den Parameter -d weggelassen ? In der Konsole sollte Apache start zu sehen sein, ggf. nach oben scrollen.
 
+### Datenbank importieren
+Die Datenbank kann über PHPmyadmin importiert werden, dieser unterscheidet sich nicht wesentlich von der alten zur neuen Moodle-Version, nur der DB-Name sowie der Port sind unterschiedlich.
 
 
 
