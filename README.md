@@ -50,6 +50,9 @@ Wenn dies erfolgreich war, können Sie unter **Import** die Datenbank als **zip*
 
 Klicken Sie dann auf den Import-Button, bis eine Suchmeldung erscheint. Danach können Sie mit der anderen Moodle-Version fortfahren, falls Sie dies noch nicht bereits getan haben.
 
+### Ausnahme neues Moodle 
+Falls das neue Moodle eine Nachinstallation von Plugins erfordert, klicken Sie sich durch den Upgrade-Assistenten, der sich automatisch öffnet, und installieren Sie die Plugins nach.
+
 ### Ende
 Sie haben nun den Import abgeschlossen, Sie können das neue Moodle unter **localhost:80** und das alte Moodle über **localhost:8080** aufrufen. Sie können dafür folgende Links verwenden:
 
