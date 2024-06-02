@@ -26,6 +26,24 @@ Warten Sie dann einige Minuten, bis der Start erfolgreich war. Sie haben den Par
 ### Datenbank importieren
 Die Datenbank kann über PHPmyadmin importiert werden, dieser unterscheidet sich nicht wesentlich von der alten zur neuen Moodle-Version, nur der DB-Name sowie der Port sind unterschiedlich.
 
+Die Webseiten mit PHPmyadmin sind unter localhost auf Port 88 für das neue Moodle und auf Port 8088 für das alte Moodle erreichbar. Sie können defür folgende Links verwenden:
+
+["PHPmyadmin altes Moodle"](http://127.0.0.1:8088)
+
+["PHPmyadmin neues Moodle"](http://127.0.0.1:88)
+
+Sie können sich mit dem Username **root** und dem Passwort **MuMissduP1434!** verwenden.
+Danach können Sie die Datenbank **moodel_old** oder **moodle_new** löschen. Sie finden dieses feature unter Operations > Remove database. Sobald Sie die Datenbank gelöscht haben können Sie eine neue Datenbank mit dem selben namen erstellen.
+
+Wenn dies erfolgreich war, können Sie unter "Import" die Datenbank als zip file importieren. ⚠️ Der Import muss als zip-Datei erfolgen, da der Dump sonst zu gross für PHPmyadmin ist. Stellen Sie sicher das Sie eine für den Import.
+Klicken Sie dann auf den Import-Button, bis eine Suchmeldung erscheint. Danach können Sie mit der anderen Moodle-Version fortfahren, falls Sie dies noch nicht getan haben.
+
+### Ende
+Sie haben nun den Import abgeschlossen, Sie können das Neue Moodle unter localhost auf dem Port 80 und das Alte Moodle auf dem Port 8080 aufrufen. Sie können defür folgende Links verwenden:
+["altes Moodle"](http://127.0.0.1:8080)
+
+["neues Moodle"](http://127.0.0.1:80)
+
 
 
 
