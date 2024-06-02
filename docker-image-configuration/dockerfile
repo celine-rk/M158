@@ -1,0 +1,48 @@
+FROM httpd:latest
+
+# Install required packages
+RUN apt-get update && apt-get install -y \
+    apache2 \
+    mariadb-client \
+    mariadb-server \
+    php8.2 \
+    libapache2-mod-php \
+    graphviz \
+    aspell \
+    ghostscript \
+    clamav \
+    php8.2-pspell \
+    php8.2-curl \
+    php8.2-gd \
+    php8.2-intl \
+    php8.2-mysql \
+    php8.2-xml \
+    php8.2-xmlrpc \
+    php8.2-ldap \
+    php8.2-zip \
+    php8.2-soap \
+    php8.2-mbstring \
+    git
+
+# Set ServerName to suppress warning
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+# Clone Moodle repository and set up
+RUN cd /opt && \
+    git clone git://git.moodle.org/moodle.git && \
+    cd moodle && \
+    git branch --track MOODLE_400_STABLE origin/MOODLE_400_STABLE && \
+    git checkout MOODLE_400_STABLE && \
+    cp -R /opt/moodle /var/www/html/ && \
+    mkdir /var/moodledata && \
+    chown -R www-data:www-data /var/moodledata && \
+    chmod -R 777 /var/moodledata && \
+    chmod -R 0755 /var/www/html/moodle
+
+# Copy entrypoint script
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Set the entrypoint
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["apache2ctl", "-D", "FOREGROUND"]
